@@ -1,0 +1,10 @@
+#include <stdio.h>
+
+int main()
+{
+  #pragna omp parallel
+  {
+    printf("hello world!\n");
+  }
+  return 0;
+}

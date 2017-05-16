@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct matrix { // size次の正方行列
+  double *val; // 1次元配列, ij成分: val[i+size*j]
+  int size;
+};
+typedef struct matrix matrix;
+
+matrix *matrix_mul(matrix, matrix, matrix);
+void print_m(matrix);
+
+int main(int argc, char **argv)
+{
+  matrix a, b, *c;
+  int i, j, n;
+
+  n = atoi(argv[1]);
+
+  a.val = (double *)malloc(sizeof(double)*n*n);
+  b.val = (double *)malloc(sizeof(double)*n*n);
+  
+  a.size = b.size = n;
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++) {
+      a.e[i*n+j] = (rand() % 11) - 5;
+      b.e[i*n+j] = (rand() % 11) - 5;
+    }
+  }
+
+  c = matrix_mul(a, b);
+  
+  print_m(a);
+  print_m(b);
+  print_m(*c);
+}
+
+/**
+ * 行列の積を計算する
+ */
+void matrix_mul(matrix a, matrix b, matrix c) {
+  int i, j, k, n;
+
+  n = a.size;
+  c = (matrix *)malloc(sizeof(matrix));
+  c->val = (double *)malloc(sizeof(double)*n*n);
+  c->size = n;
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++) {
+      c->val[i+n*j] = 0;
+      for (k = 0; k < n; k++) {
+	c->val[i+n*j] += a.val[k+n*i]*b.val[j+n*j];
+      }
+    }
+  }
+
+  return c;
+}
+
+/**
+ * 行列を表示する
+ */
+void print_m(matrix A)
+{
+  int i, j, n;
+
+  n = a.size;
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++) {
+      printf("%lf ",A.val[i+n*j]);
+      printf("\n");
+    }
+  }
+  
+  return;
+}
